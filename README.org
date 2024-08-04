@@ -1,4 +1,4 @@
-#+TITLE: Welcome to Raki Finance
+#+TITLE: Movement with Aptos Workshop
 
 * Table Of Contents :toc:
 - [[#movement-with-aptos-workshop][Movement with Aptos Workshop]]
