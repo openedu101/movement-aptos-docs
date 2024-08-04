@@ -22,10 +22,3 @@
 | Function Calling      | Static dispatch                                                  | static ditpatch                            | Dynamic Dispatch                          | Static dispatch                        |
 | Authenticated Storage | Yes                                                              | No                                         | Yes                                       | No                                     |
 | Object Accessibility  | Được đảm bảo, bảo vệ khi truy cập ở global (globally accessible) | Không có                                   | Không có                                  | Có thể ẩn                              |
-
-** What is Aptos?
-+ Aptos là một Blockchain Layer 1 - Được xây dựng và phát triển bởi cộng đồng (community-driver network - Open Source).
-+ Aptos Foundation - giống như một ngươi đồng đội đáng tin cậy của Aptos Blockchain - hỗ trợ những nỗ lực của cộng đồng đã đóng góp và phát triển blockchain. Aptos Foundation giúp phát triển hệ sinh thái, ngoài ra còn tại trợ cung cấp
-
-
-** What is this Workshop?

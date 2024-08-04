@@ -1,0 +1,67 @@
+#+TITLE: What is Aptos
+
+
+* What is Aptos?
++ Aptos là một Blockchain Layer 1 - Được xây dựng và phát triển bởi cộng đồng (community-driver network - Open Source).
++ Aptos Foundation - giống như một ngươi đồng đội đáng tin cậy của Aptos Blockchain - hỗ trợ những nỗ lực của cộng đồng đã đóng góp và phát triển blockchain. Aptos Foundation giúp phát triển hệ sinh thái, ngoài ra còn tại trợ cung cấp các khoản hỗ trợ các teams & cá nhân để thúc đẩy sự tham gia đóng góp thông qua các chương trình và sự kiện giáo dục, đào tạo các development phát triển trên ecosystem.
+
+* Install Aptos
+** MacOs
+#+begin_quote
+Với MacOs, đây là Os có cách cài đặt Aptos CLI đơn giản nhất với việc sử dụng Package Manager =brew=
+#+end_quote
+*** Cài đặt
+1. Đảm bảo là bạn đã cài đặt =Brew=: [[https://brew.sh/][https://brew.sh/]]
+2. Nếu chưa hãy cài đặt bằng lệnh sau trên terminal
+  #+begin_src sh :results output
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  #+end_src
+
+3. Đảm bảo là bạn đã cài đặt xcode (Môi trường lập trình trên macos)
+   + Chạy lệnh bên dưới nếu bạn chưa cài đặt
+     #+begin_src sh :results output
+     xcode-select --install
+     #+end_src
+
+4. Open một terminal mới và chạy theo lệnh sau
+  #+begin_src sh :results output
+  brew update
+  brew install aptos
+  #+end_src
+
+5. Sau khi cài đặt xong thì hãy thử chạy lệnh sau để đảm bảo bạn đã cài đặt thành công
+  #+begin_src sh :results output
+  aptos help
+  #+end_src
+
+  + Đây là kết quả
+  #+begin_example
+  Command Line Interface (CLI) for developing and interacting with the Aptos blockchain
+
+  Usage: aptos <COMMAND>
+
+  Commands:
+    account     Tool for interacting with accounts
+    config      Tool for interacting with configuration of the Aptos CLI tool
+    genesis     Tool for setting up an Aptos chain Genesis transaction
+    governance  Tool for on-chain governance
+    info        Show build information about the CLI
+    init        Tool to initialize current directory for the aptos tool
+    key         Tool for generating, inspecting, and interacting with keys
+    move        Tool for Move smart contract related operations
+    multisig    Tool for interacting with multisig accounts
+    node        Tool for operations related to nodes
+    stake       Tool for manipulating stake and stake pools
+    update      Update the CLI or other tools it depends on
+    help        Print this message or the help of the given subcommand(s)
+
+  Options:
+    -h, --help     Print help
+    -V, --version  Print version
+  #+end_example
+
+*** Nâng cấp version thường xuyên với CLI
+#+begin_src sh :results output
+brew update
+brew upgrade aptos
+#+end_src
