@@ -1,7 +1,7 @@
 {
-  "name": "raki-finance-documentaion",
+  "name": "movement-with-aptos-documentaion",
   "version": "0.0.1",
-  "description": "Raki Finance Documentation",
+  "description": "Movement with Aptos Documentation",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rakigeek"
+    "url": "git+https://github.com/openedu101/movement-aptos-docs"
   },
   "author": "Jayden <jayden.dangvu@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rakigeek"
+    "url": "https://github.com/openedu101/movement-aptos-docs"
   },
-  "homepage": "https://github.com/rakigeek",
+  "homepage": "https://github.com/openedu101/movement-aptos-docs",
   "dependencies": {
     "next": "^13.0.6",
     "nextra": "latest",

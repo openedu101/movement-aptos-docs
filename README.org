@@ -1,18 +1,12 @@
 #+TITLE: Movement with Aptos Workshop
 
-* Table Of Contents :toc:
-- [[#movement-with-aptos-workshop][Movement with Aptos Workshop]]
-  - [[#what-is-movement][What is Movement?]]
-  - [[#why-move][Why Move?]]
-  - [[#what-is-aptos][What is Aptos?]]
-  - [[#what-is-this-workshop][What is this Workshop?]]
-
 * Movement with Aptos Workshop
 ** What is Movement?
 + Movement Labs đang tập trung xây dựng một Blockchain Network chạy trên hạ tầng Move-Based (Move Virtual Machine), sản phẩm nổi bật và chủ đạo là Movement Network và M1 Shared Sequencer (sẽ được đề cập trong phần sau).
 + Movement là một nền tảng tương tác với nhau thông qua blockchain cung cập một TPS (Transactions per second) nhanh nhất có thể thông qua việc sử dụng Move (Move Language, Move Virtual Machine), ngoài ra còn đạt được instant finality (Hoàn tất giao dịch tức thời).
 + Movement cũng có khả năng cung cấp thanh khoản lớn ngày từ đầu blockchain. (native day-zero access mass liquidity).
 + Modular Customizations: Khả năng thay đổi và tuỷ chình các thành phần của blockchain theo nhu cầu để phù hợp với nhiều mục đích.
++ Movement đang hỗ trợ cho 3 nền tảng Blockchain bao gồm: Aptos Move, Sui Move, và cũng hỗ trợ embedded EVM được thông dịch thông qua MEVM - trao quyền cho user trên Sui, Aptos và EVM có thể sử dụng thông qua L2.
 ** Why Move?
 + Move là một ngôn ngữ lập trình được tạo ra bởi Facebook với tính an toàn và bảo mật cao, được tạo ra với mục đích tập trung vào các ứng dụng quản lý tài sản, như tính sở hữu (ownership) và an toàn (Phù hợp với các ứng dụng liên quan tới tài sản).
 + Các tài sản (assets) trong move được biểu diễn lại dưới là "tài nguyên" (resources).
@@ -30,4 +24,8 @@
 | Object Accessibility  | Được đảm bảo, bảo vệ khi truy cập ở global (globally accessible) | Không có                                   | Không có                                  | Có thể ẩn                              |
 
 ** What is Aptos?
++ Aptos là một Blockchain Layer 1 - Được xây dựng và phát triển bởi cộng đồng (community-driver network - Open Source).
++ Aptos Foundation - giống như một ngươi đồng đội đáng tin cậy của Aptos Blockchain - hỗ trợ những nỗ lực của cộng đồng đã đóng góp và phát triển blockchain. Aptos Foundation giúp phát triển hệ sinh thái, ngoài ra còn tại trợ cung cấp
+
+
 ** What is this Workshop?
