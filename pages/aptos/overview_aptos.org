@@ -1,6 +1,8 @@
-+ In Move, a "Resource" is a special type designed to represent digital assets, like tokens or coins.
-+ Key Features of resources:
-  + Non-copyable: You can't duplicate a resource. This ensures that assets like tokens can't be copied, preventing issues like double-spending
-  + Non-droppable: You can't accidentally delete or lose a Resource. This helps protect digital assets from being unintentionally lost.
-  + Storable: You can store resources in your account or another resource
-  + Transferable: You can move resources between accounts (only for an owner )
+* Giới thiệu
++ Aptos là một blockchain Layer 1 được xây dựng với mục tiêu mang đến một nền tảng giao dịch nhanh chóng, bảo mật và có khả năng mở rộng cao. Được phát triển bởi đội ngũ đứng sau dự án Diem của Meta (Facebook) và là một dự án Opensource được contributes bởi cộng đồng trên thế giới, Aptos được kỳ vọng sẽ giải quyết những hạn chế của các blockchain thế hệ trước và mở ra một kỷ nguyên mới cho ngành công nghiệp blockchain.
+
+* Công nghệ cốt lõi
++ Ngôn ngữ lập trình Move: Aptos sử dụng ngôn ngữ lập trình Move, được thiết kế riêng cho các hệ thống blockchain. Move được đánh giá cao về tính an toàn và khả năng kiểm chứng, giúp giảm thiểu rủi ro của các cuộc tấn công và lỗi bảo mật.
++ Đồng thuận BFT (Byzantine Fault Tolerance): Aptos áp dụng cơ chế đồng thuận BFT (AptosBFT) để đảm bảo sự đồng thuận giữa các node trong mạng. BFT giúp mạng lưới hoạt động ổn định và chống lại các cuộc tấn công.
++ Block-STM: Aptos sử dụng công cụ thực thi đồng thời Block-STM để tăng cường hiệu suất và khả năng mở rộng. Công nghệ này cho phép xử lý nhiều giao dịch cùng một lúc, giảm thiểu thời gian xác nhận giao dịch.
++ Aptos Framework: Aptos cung cấp một bộ công cụ và thư viện phát triển phong phú, giúp các nhà phát triển dễ dàng xây dựng các ứng dụng phi tập trung (dApp) trên nền tảng của mình.
