@@ -71,3 +71,96 @@
 brew update
 brew upgrade aptos
 ```
+
+## Linux (Build from source) - Cũng hoạt động trên MacOs
+
+1.  Đảm bảo đã cài đặt
+
+    -   [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+
+    -   [Rust](https://www.rust-lang.org/tools/install)
+
+        ``` bash
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+        ```
+
+    -   [Cmake](https://cmake.org/download/)
+
+    -   [LLVM](https://releases.llvm.org)
+
+    -   [libssl-dev](https://packages.ubuntu.com/jammy/libssl-dev) and
+        [libclang-dev](https://packages.ubuntu.com/jammy/libclang-dev)
+
+2.  Clone Repo Aptos-core bằng terminal
+
+    ``` bash
+    git clone https://github.com/aptos-labs/aptos-core.git
+    ```
+
+3.  Đi vào trong repo aptos-core bằng terminal
+
+    ``` bash
+    cd aptos-core
+    ```
+
+4.  Chạy lệnh terminal bên dưới để setup môi trường cài đặt cho aptos.
+
+    ``` bash
+    ./scripts/dev_setup.sh
+    ```
+
+5.  Update môi trường shell (shell environment)
+
+    ``` bash
+    source ~/.cargo/env
+    ```
+
+## Windows
+
+1.  Đảm bảo đã cài đặt
+
+    -   [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+
+    -   [Rust](https://www.rust-lang.org/tools/install)
+
+        ``` bash
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+        ```
+
+    -   [LLVM](https://releases.llvm.org)
+
+    -   Install [Microsoft Visual studio build tools for
+        Windows](https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2022)
+
+    -   Nếu bạn không cài Microsoft Visual studio build tools for
+        Windows thì cài [Cmake](https://cmake.org/download/)
+
+2.  Clone Repo Aptos-core bằng terminal
+
+    ``` bash
+    git clone https://github.com/aptos-labs/aptos-core.git
+    ```
+
+3.  Đi vào trong repo aptos-core bằng terminal
+
+    ``` bash
+    cd aptos-core
+    ```
+
+4.  Open Powershell Terminal bằng quyền administrator & chạy lệnh bên
+    dưới
+
+    1.  Option 1
+
+        ``` bash
+        PowerShell -ExecutionPolicy Bypass -File ./scripts/windows_dev_setup.ps1
+        ```
+
+    2.  Option 2
+
+        ``` bash
+        cargo build --package aptos --profile cli
+        ```
+
+        -   Sau khi cài đặt thì file binary sẽ được được tạo ra ở:
+            `target\cli\aptos.exe`

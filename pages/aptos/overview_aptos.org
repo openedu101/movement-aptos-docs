@@ -1,0 +1,6 @@
++ In Move, a "Resource" is a special type designed to represent digital assets, like tokens or coins.
++ Key Features of resources:
+  + Non-copyable: You can't duplicate a resource. This ensures that assets like tokens can't be copied, preventing issues like double-spending
+  + Non-droppable: You can't accidentally delete or lose a Resource. This helps protect digital assets from being unintentionally lost.
+  + Storable: You can store resources in your account or another resource
+  + Transferable: You can move resources between accounts (only for an owner )
