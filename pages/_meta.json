@@ -1,14 +1,14 @@
 {
   "index": "What is Movement?",
   "aptos": "What is Aptos",
+  "movement": "Movement Technical Details",
+  "movement_framework" : "Movement Framework (Coming Soon)",
+  "interoperability_security": "Interoperability & Security (Coming Soon)",
+  "move_solidity" : "Move vs Solidity",
   "rakiapp": {
     "title": "Movement with Aptos Workshop ↗",
     "type": "page",
     "href": "https://openedu101.com",
     "newWindow": true
-  },
-  "movement": "Movement Technical Details",
-  "movement_framework" : "Movement Framework (Coming Soon)",
-  "interoperability_security": "Interoperability & Security (Coming Soon)",
-  "move_solidity" : "Move vs Solidity"
+  }
 }
