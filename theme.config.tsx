@@ -12,7 +12,7 @@ const config: DocsThemeConfig = {
   },
   docsRepositoryBase: 'https://github.com/openedu101/movement-aptos-docs/blob/main',
   footer: {
-    text: 'Movement with Aptos Workshop',
+    text: 'Movement with Aptos Workshop - Created by Jayden Dang <Dang Quang Vu>',
   },
 }
 

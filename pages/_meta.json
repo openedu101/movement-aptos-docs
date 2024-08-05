@@ -7,5 +7,8 @@
     "href": "https://openedu101.com",
     "newWindow": true
   },
-  "movement": "Movement Technical Details"
+  "movement": "Movement Technical Details",
+  "movement_framework" : "Movement Framework (Coming Soon)",
+  "interoperability_security": "Interoperability & Security (Coming Soon)",
+  "move_solidity" : "Move vs Solidity"
 }
