@@ -1,0 +1,36 @@
+# Staked Settlement Module
+
+-   Stated Settlement Module là thiết kế với mục đích cung cấp khả năng
+    fast finality ( Finality Block nhanh -\> Finality transaction nhanh
+    ) cho các transactions với Move Rollups Network.
+-   Bẳng cách sử dụng một mạng lưới các người xác thực (attesters) với
+    việc đặt cược (staking) tài sản để xác nhận chuyển đổi trạng thái,
+    module này đảm bảo tính bảo mật cao nhất và giảm độ trễ.
+-   Các validators đặt cực tài sản và verify tính đúng đắng và xác nhận
+    các chuyển đổi trạng thái (state), kết hợp với lợi ích bảo mật của
+    việc staking với sự hiệu quả và hoàn tất giao dịch nhanh chóng.
+
+## Security Mechanism
+
+-   Ethereum Settlement: Validators (người xác thực) đặt cược tài sản để
+    cung cấp security cho nền kinh tế, đảm bảo tính toàn vẹn đối với
+    toàn bộ dữ liệu trên mạng lưới (network).
+-   zk and Optimistic Rollups: zk-rollups cung cấp khả năng bảo mật
+    thông qua validity proofs, trong khi optimistic rollups dựa vào
+    "challenge periods" để giải quyết tranh chấp. Cả 2 phương pháp đều
+    có độ trễ và chi phí tính toán cao thông qua ZK.
+-   Staked Rollups: Cung cấp khả năng finality transactions nhanh và đảo
+    bảo tính bảo mật cao cho nền kinh tế mà không cần tới việc proofs
+    generateon hoặc challenge periods, giảm độ trễ và cải thiện trải
+    nghiệm người dùng so với zk-rollups và optimistic rollups.
+
+## Comparison with Other Rollups
+
+-   Staked rollups không yêu cầu khả năng tính toán cao như proof
+    generation của zk-rollups.
+-   Staked rollups cung cấp khả năng giảm độ trễ đáng kể nếu so sánh với
+    cả optimistic và zk-rollups, với khả năng finality theo giây
+    "seconds" của mình.
+-   Fast finality là điều cần thiết cho khả năng tương tác và các giao
+    dịch atomic cross-rollup, khiến cho các staked rollups trở thành
+    giải pháp lý tưởng các nhiều ứng dụng trên web3.

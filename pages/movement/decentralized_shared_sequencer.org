@@ -1,0 +1,8 @@
+* Decentralized Shared Sequencer (M1)
++ M1 Sequencer là một cơ chế sắp sếp các sequencer (chuỗi) phi tập trung và có thể shared, giúp tăng cường khả năng chống lỗi, công bằng và chốn kiểm duyệt cho toàn bộ mạng lưới.
++ Bằng cách cung cấp khả năng tuỳ chỉnh thứ tự giao dịch, M1 hỗ trợ cross-chain atomic swaps và thanh khoản chung trong hệ sính thái Move Arena.
++ Shared Sequencer này đảm bảo thứ tự giao dịch công bằng và hiệu quả trên tất cả rollup tham gia.
+
+#+begin_quote
+M1 Sequencer không chỉ cải thiện độ ổn định của mạng lưới mà còn tạo điều kiện thuận lợi cho khả năng cross-chain interoperability và pooled liquidity (thanh khoản chung), cho phép chuyển giao tài sản và tương tác liền mạch giữa các rollup khác nhau.
+#+end_quote
