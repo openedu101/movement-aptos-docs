@@ -1,5 +1,0 @@
-* Move Executor
-+ Move executor là 1 thành phần chính trong Movement-SDK, nó hỗ trợ cho cả 2 hệ thống VM là MoveVM và EVM bytecode.
-+ Với khả năng hỗ trợ và tương thích với cả 2 thì Movement-SDK cung cấp một môi trường thực thi mạnh mẽ, mở ra rất nhiều khả năng cho developers có thể tận dụng các tính năng nâng cao, tiên tiến của Move Language trong khi vẫn duy trì khả năng tương thích với các ứng dụng trên Ethereum hiện có. Move Executor kết hợp khả năng thực thi song song của MoveVM và các trình thông dịch EVM ở thời điểm hiện tại, đảm bảo tính tương thích và khả năng mở rộng.
-
-[[../assets/move-executor.png]]
