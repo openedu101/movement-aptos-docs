@@ -1,0 +1,49 @@
+# Vector
+- `vector<T>` là kiểu tập hợp duy nhất được cung cấp bởi Move. Một `vector<T>` là một tập hợp đồng nhất của các giá trị kiểu T có thể mở rộng hoặc thu hẹp bằng cách thêm/xóa các giá trị từ "end" của nó.
+- Một `vector<T>` có thể được khởi tạo với bất kỳ kiểu dữ liệu nào là T. Ví dụ, `vector<u64>`, `vector<address>`, `vector<0x42::MyModule::MyResource>`, và `vector<vector<u8>>` đều là các kiểu vector hợp lệ.
+
+```rust
+let byte_string_example:vector<u8> = b"Hello world"; //Byte strings are quoted string literals prefixed by a b
+let hex_string_example:vector<u8> = x"48656c6c6f20776f726c64"; //Hex strings are quoted string literals prefixed by a x
+```
+
+```rust
+let list = vector::empty<u64>();
+
+vector::push_back(&mut list, 10);
+vector::push_back(&mut list, 20);
+
+assert!(*vector::borrow(&list, 0) == 10, 9);
+assert!(*vector::borrow(&list, 1) == 20, 9);
+
+assert!(vector::pop_back(&mut list) == 20, 9);
+assert!(vector::pop_back(&mut list) == 10, 9);
+```
+
+# Destroying and copying vectors
+- Một số hành vi của `vector<T>` phụ thuộc vào khả năng của kiểu phần tử `T`. Ví dụ, các vectors chứa các phần tử không có khả năng drop không thể bị bỏ đi một cách ngầm định như v trong ví dụ trên, chúng phải được hủy bỏ một cách rõ ràng bằng vector::destroy_empty.
+
+Lưu ý rằng vector::destroy_empty sẽ gây ra lỗi tại thời điểm chạy nếu vec không chứa phần tử nào (vec chứa zero phần tử).
+
+```rust
+fun destroy_any_vector<T>(vec: vector<T>) {
+    vector::destroy_empty(vec) // deleting this line will cause a compiler error
+}
+```
+
+- Nhưng sẽ không xảy ra lỗi khi hủy một vector chứa các phần tử có khả năng `drop`.
+```rust
+fun destroy_droppable_vector<T: drop>(vec: vector<T>) {
+    // valid!
+    // nothing needs to be done explicitly to destroy the vector
+}
+```
+
+- Tương tự, các vector không thể được sao chép (`copy`) trừ khi kiểu phần tử có khả năng `copy`. Nói cách khác, một `vector<T>` có khả năng copy chỉ khi `T` có khả năng `copy`.
+
+```rust
+let x = vector::singleton<u64>(10);
+let y = copy x; // compiler error without the copy!
+```
+
+- Việc sao chép các vector lớn có thể tốn kém, vì vậy trình biên dịch yêu cầu phải có các sao chép rõ ràng để dễ dàng nhận thấy nơi chúng xảy ra.

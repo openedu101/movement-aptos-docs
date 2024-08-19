@@ -1,0 +1,49 @@
+# Generics
+
+- Move hỗ trợ việc sử dụng generics, cho phép các developer viết code có thể sử dụng với các loại dữ liệu khác nhau mà không cần phải viết lại code cho từng loại cụ thể.
+
+- Generics trong Move tương tự như generics trong các ngôn ngữ lập trình khác như Java và C#. Chúng cho phép các nhà phát triển viết code tái sử dụng có thể làm việc với bất kỳ loại nào đáp ứng một tập hợp các yêu cầu cụ thể.
+- Điều này có thể giúp giảm sự trùng lặp code và cải thiện khả năng đọc và duy trì code.
+
+- Trong Move, chúng ta thường sử dụng thuật ngữ generics thay thế cho các tham số kiểu và đối số kiểu.
+
+- Declaring Type Parameters - Khai báo Tham số Kiểu
+  - Cả function và struct đều có thể nhận một danh sách các tham số kiểu trong chữ ký của chúng, được bao bởi một cặp dấu ngoặc nhọn \<_>.
+
+- Generic Functions
+  - Các tham số kiểu cho hàm được đặt sau tên hàm và trước danh sách các tham số (giá trị). Mã sau đây định nghĩa một hàm nhận dạng generic mà nhận một giá trị của bất kỳ loại nào và trả lại giá trị đó mà không thay đổi.
+  - Khi đã được định nghĩa, tham số kiểu T có thể được sử dụng trong các kiểu tham số, kiểu trả về, và bên trong thân hàm.
+
+## Generic Function
+```rust
+module my_addrx::Generics
+{
+    //a generic identity function that takes a value of any type and returns that value unchanged
+    fun example<T>(num: T): T {
+        num
+    }
+
+    #[test]
+    fun testing()
+    {
+        let x:u64 = example<u64>(8);
+        let y:bool = example<bool>(true);
+
+        assert!(x==8,1);
+        assert!(y==true,1);
+
+    }
+
+}
+```
+
+## Generics Structs
+- Các tham số kiểu cho các cấu trúc (structs) được đặt sau tên struct và có thể được sử dụng để đặt tên cho các kiểu của các trường.
+```rust
+struct Foo<T> has copy, drop { x: T }
+
+struct Bar<T1, T2> has copy, drop {
+    x: T1,
+    y: vector<T2>,
+}
+```

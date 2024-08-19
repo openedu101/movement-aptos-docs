@@ -1,0 +1,45 @@
+# Signer
+
+- Signer là một kiểu dữ liệu đại diện cho quyền ủy quyền và kiểm soát một tài nguyên (resource) hoặc tài sản (asset) trên blockchain. Kiểu dữ liệu signer được sử dụng để chỉ định tài khoản hoặc thực thể nào chịu trách nhiệm thực hiện một giao dịch hoặc hoạt động cụ thể trên blockchain.
+
+- Bạn có thể nghĩ về việc native implementation của nó như sau:
+
+`struct signer has drop { a: address }`
+
+- Giá trị signer đặc biệt vì chúng không thể được tạo ra thông qua các literal hoặc instruction-only có thể được tạo bởi Move VM. Trước khi VM chạy một script với các tham số thuộc kiểu signer, nó sẽ tự động tạo ra các giá trị signer và truyền chúng vào script:
+
+```rust
+script {
+    use std::signer;
+    fun main(s: signer) {
+        assert!(signer::address_of(&s) == @my_addrx, 0);
+    }
+}
+```
+
+`signer` operations:
+package std::signer trong standard library module cung cấp 2 function tiện ích cho signer:
+  - signer::address_of(&signer): address -  Trả về địa chỉ được bao bọc bởi `&signer`.
+  - signer::borrow_address(&signer): &address -  Trả về tham chiếu đến địa chỉ được bao bọc bởi `&signer`.
+
+```rust
+module my_addrx::MyResource
+{
+    use std::signer;
+
+    struct MyResource has key
+    {
+        value:u64
+    }
+
+    public entry fun increase_value_by_one(account: &signer) acquires MyResource {
+
+        let signer_address = signer::address_of(account);
+
+        let myresource = borrow_global_mut<MyResource>(signer_address);
+        myresource.value=myresource.value+1;
+    }
+}
+```
+# Ownership
+- Không giống như các giá trị scalar đơn giản, các giá trị signer không thể sao chép được, có nghĩa là chúng không thể được sao chép (từ bất kỳ thao tác nào, dù là thông qua lệnh sao chép `copy` hay thông qua phép giải tham chiếu `dereference *`).

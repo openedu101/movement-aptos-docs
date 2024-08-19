@@ -1,0 +1,60 @@
+# Constants
+
+- Constants là một cách để đặt tên cho các giá trị tĩnh, được chia sẻ bên trong một module hoặc script. Trong Move, constants được khai báo bằng từ khóa const.
+
+- Giá trị của constants phải được biết trước tại thời điểm biên dịch. Giá trị của constants được lưu trữ trong module hoặc script đã biên dịch. Mỗi lần constants được sử dụng, một bản sao mới của giá trị đó sẽ được tạo ra.
+
+## Syntax
+```rust
+const <NAME>: <TYPE> = <EXPRESSION>;
+```
+
+```rust
+module my_addrx::Constants
+{
+    use std::debug::print;
+
+    //Some Examples
+    const X:u64=10;
+    const Y:address=@my_addrx;
+    const Z:bool=false;
+
+    fun constants()
+    {
+        print(&X);
+        print(&Y);
+        print(&Z);
+
+    }
+
+    #[test]
+    fun testing()
+    {
+        constants();
+    }
+}
+```
+
+## Naming
+Constants must start with a capital letter A to Z. After the first letter, constant names can contain underscores _, letters a to z, letters A to Z, or digits 0 to 9.
+- Constants phải bắt đầu với một từ cái được viết hoa (A-Z).
+- Sau từ cái đầu tiên, constant name có thể chưa các dấu như: _, chữ cái (a-z), chữ cái hoa (A-Z), hoặc số.
+
+```rust
+//Valid
+const Foo:u64=123;
+const Flag:bool=true;
+const My_Addrx:address=@my_addrx;
+const EIndexOutOfBound = 0; // Recommend
+
+//Invalid;
+const x:u8=10;
+const flag:bool=false;
+const my_addrx:address=@my_addrx;
+```
+
+## Một số điểm quan trọng khác:
+- Constants chỉ giới hạn trong các kiểu dữ liệu nguyên thủy như `bool`, `u8`, `u16`, `u32`, `u64`, `u128`, `u256`, `address`, và `vector<u8>`
+- Tên của constants nên sử dụng kiểu Upper Camel Case và bắt đầu bằng chữ "E" nếu chúng đại diện cho mã lỗi (ví dụ: `EIndexOutOfBounds`) và kiểu Upper Snake Case nếu chúng đại diện cho giá trị không phải lỗi (ví dụ: `MIN_STAKE`).
+- Constants có phạm vi public hiện tại không được hỗ trợ. Các giá trị const chỉ có thể được sử dụng trong module khai báo.
+- Giá trị của constants không thể truy cập được từ bên ngoài phạm vi module hoặc script của nó.

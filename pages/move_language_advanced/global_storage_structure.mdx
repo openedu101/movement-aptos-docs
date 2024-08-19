@@ -1,0 +1,18 @@
+# Global Storage Structure
+Trong Move, cấu trúc `global storage` là một khu vực lưu trữ lâu dài cho phép các nhà phát triển lưu trữ dữ liệu trên blockchain.
+
+Cấu trúc lưu trữ toàn cầu trong Move bao gồm một loại dữ liệu ánh xạ (mapping), tương tự như hash table hoặc dictionary trong các ngôn ngữ lập trình khác. Loại dữ liệu mapping này cho phép các nhà phát triển lưu trữ các cặp key-values, trong đó key là unique identifier và value là data cần được lưu trữ.
+
+Mục đích của các chương trình Move là `read from` và `write to` vào global storage lâu dài có cấu trúc tree-shaped. Các chương trình không thể truy cập vào filesystem, network, hoặc bất kỳ dữ liệu nào ngoài tree này.
+
+- Trong pseudocode, cấu trúc global storage trông giống như sau:
+
+```rust
+struct GlobalStorage {
+  resources: Map<(address, ResourceType), ResourceValue>
+  modules: Map<(address, ModuleName), ModuleBytecode>
+}
+```
+
+- Về cấu trúc, global storage là một khu rừng gồm các cây có gốc tại một account address. Mỗi address có thể lưu trữ cả giá trị dữ liệu resources và code module.
+- Như pseudocode ở trên chỉ ra, mỗi address có thể lưu trữ tối đa một giá trị resources của một loại cụ thể và tối đa một module với một tên cụ thể.

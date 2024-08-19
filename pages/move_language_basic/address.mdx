@@ -1,0 +1,29 @@
+# Address
+
+- `address` là một kiểu dữ liệu tích hợp trong Move được sử dụng để đại diện cho các vị trí (đôi khi gọi là tài khoản `account`) trong global storage. Một giá trị address là một định danh 256-bit (32-byte). Tại một address nhất định, có thể lưu trữ hai thứ: Module và Resource.
+
+- Mặc dù address là một số nguyên `256-bit`, address Move được thiết kế để trở nên không rõ ràng (intentionally opaque), chúng không thể được tạo ra từ các số nguyên, không hỗ trợ các phép toán số học, và không thể bị thay đổi. Mặc dù có thể có các chương trình thú vị sử dụng tính năng như vậy (ví dụ, toán tử con trỏ trong C thực hiện một vai trò tương tự), Move không cho phép hành vi động này vì nó được thiết kế từ đầu để hỗ trợ kiểm tra tĩnh.
+- Bạn có thể sử dụng các giá trị address tại thời điểm chạy (các giá trị kiểu address) để truy cập resources tại address đó. Bạn không thể truy cập các module tại thời điểm chạy thông qua các giá trị address.
+
+- Address và syntax:
+  - Address có hai dạng, `named` hoặc `numerical`. Syntax của address named theo cùng một quy tắc với bất kỳ định danh tên nào trong Move. Syntax của address numerical không bị hạn chế ở các giá trị mã hex, và bất kỳ giá trị số u256 hợp lệ nào đều có thể được sử dụng làm giá trị address, ví dụ: `42`, `0xCAFE`, và `2024` đều là các literals address số hợp lệ.
+  - Để phân biệt khi nào một address đang được sử dụng trong ngữ cảnh biểu thức(expression) hoặc không, cú pháp khi sử dụng address khác nhau tùy thuộc vào ngữ cảnh nơi nó được sử dụng:
+    - Khi một address được sử dụng như một biểu thức, address phải được tiền tố bởi ký tự @, ví dụ: `@<numerical_value>` hoặc `@<named_address_identifier>`.
+    - Ngoài ngữ cảnh biểu thức, address có thể được viết mà không cần ký tự @ đứng trước, ví dụ: `<numerical_value>` hoặc `<named_address_identifier>`.
+
+Nói chung, bạn có thể coi @ như một toán tử chuyển một address từ mục không gian tên thành mục biểu thức.
+
+```rust
+let addrx1:address = @0x1; //numerical address example
+let addrx2:address = @my_addrx;//named address example
+```
+# Global Storage Operations:
+
+- Mục đích chính của các `address` là để tương tác với các hoạt động global storage.
+
+- Các address values được sử dụng với các thao tác `exists`, `borrow_global`, `borrow_global_mut`, và `move_from`.
+
+- Hoạt động global storage duy nhất không sử dụng địa chỉ là move_to, mà sử dụng `signer`.
+
+## Quyền sở hữu:
+- Tương tự như các giá trị scalar khác được tích hợp vào ngôn ngữ, các giá trị địa chỉ có thể sao chép ngầm định, nghĩa là chúng có thể được sao chép mà không cần lệnh rõ ràng như `copy`.

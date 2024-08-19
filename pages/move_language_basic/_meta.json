@@ -13,7 +13,6 @@
   "signer" : "Signer",
   "vector" : "Vector",
   "address" : "Address",
-  "uses_aliases" : "Uses & Aliases",
   "maps" : "Maps",
   "hash_function" : "Hash Functions",
   "references" : "References",

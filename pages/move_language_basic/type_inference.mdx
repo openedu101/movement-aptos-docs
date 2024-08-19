@@ -1,0 +1,42 @@
+# Type Inference
+- Trong hầu hết các trường hợp, trình biên dịch Move sẽ có khả năng suy luận các type arguments, vì vậy bạn không cần phải viết chúng một cách rõ ràng. Dưới đây là những gì các ví dụ trên sẽ trông như thế nào nếu chúng ta bỏ qua các đối số kiểu:
+```rust
+fun foo() {
+    let x = id(true);
+    //        ^ <bool> is inferred
+
+    let foo = Foo { x: true };
+    //           ^ <bool> is inferred
+
+    let Foo { x } = foo;
+    //     ^ <bool> is inferred
+}
+```
+
+Lưu ý: Khi trình biên dịch không thể suy luận các kiểu, bạn sẽ cần phải chú thích chúng một cách thủ công. Một tình huống phổ biến là khi gọi một hàm với các tham số kiểu chỉ xuất hiện ở các vị trí trả về.
+```rust
+module my_addrx::TypeInference{
+    use std::vector;
+
+    fun foo() {
+        // let v = vector::empty();
+        //                    ^ The compiler cannot figure out the element type.
+
+        let v = vector::empty<u64>();
+        //                 ^~~~~ Must annotate manually.
+    }
+}
+```
+
+Tuy nhiên, trình biên dịch sẽ có khả năng suy luận kiểu nếu giá trị trả về đó được sử dụng sau đó trong hàm đó.
+```rust
+module my_addrx::TypeInference{
+    use std::vector;
+
+    fun foo() {
+        let v = vector::empty();
+        //                 ^ <u64> is inferred
+        vector::push_back(&mut v, 100);
+    }
+}
+```
