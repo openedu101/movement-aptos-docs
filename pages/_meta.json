@@ -5,6 +5,8 @@
   "movement_framework" : "Movement Framework (Coming Soon)",
   "interoperability_security": "Interoperability & Security (Coming Soon)",
   "move_solidity" : "Move vs Solidity",
+  "move_language_basic" : "Move Language Basic",
+  "move_language_advanced" : "Move Language Advanced",
   "rakiapp": {
     "title": "Movement with Aptos Workshop ↗",
     "type": "page",

@@ -1,0 +1,17 @@
+# Script
+- Scripts là các điểm đầu vào có thể thực thi, tương tự như hàm main trong ngôn ngữ lập trình truyền thống. Một script thường gọi các hàm của một module đã được publish để thực hiện các cập nhật vào bộ lưu trữ toàn cục. Scripts là các đoạn mã tạm thời không được publish trong bộ lưu trữ toàn cục.
+
+- Một tệp nguồn Move (hoặc đơn vị biên dịch) có thể chứa nhiều modules và scripts. Tuy nhiên, việc publish một module hoặc thực thi một script là các hoạt động riêng biệt của VM.
+
+```rust
+script {
+    use std::debug;
+
+    const ONE: u64 = 1;
+
+    fun main(x: u64) {
+        let sum = x + ONE;
+        debug::print(&sum);
+    }
+}
+```

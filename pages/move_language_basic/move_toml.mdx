@@ -1,0 +1,27 @@
+- Manifest
+``` toml
+[package] # Includes packages metadata such as name version
+name = "name"
+version = "1.0.0"
+authors = ["Jayden Dang <jayden.dangvu@gmail.com>"]
+# Optional
+license = ""
+
+[addresses]
+std = "0x1" # 0x000.....0001
+jayden = "0xCAFE" # 0x00....00CAFE
+
+[dev-addresses]
+
+# Multiline Style
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-core.git"
+rev = "mainnet"
+subdir = "aptos-move/framework/aptos-framework"
+
+# Inline Style
+[dependencies]
+AptosFramework = { git = "https://github.com/aptos-labs/aptos-core.git" , subdir = "aptos-move/framework/aptos-framework", rev = "mainnet" }
+
+[dev-dependencies]
+```

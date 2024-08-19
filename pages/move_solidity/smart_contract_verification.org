@@ -1,29 +1,45 @@
-** Smart Contract Verification
-*** Move's Approach to Smart contract verification
-**** Key Features
-+ Focus on Security: Move was designed with security as a top priority
-+ Formal Verification: Move allows developers to mathematically prove that their code is correct. This means you can be more certain that the code behaves as expected and is free from certain types of bugs.
-+ Linear type system: Move's type system helps prevent many common vulnerabilities, like reentrancy attacks by making it easier to reason about how data is used and transferred.
-**** Benefits
-+ High Assurance: The built-in features and formal verification system give developers strong tools to ensure their code is secure and correct.
-*** Solidity's Approach to Smart Contracts verification
-**** Key Features
-+ Ecosystem Improvements: Solidity has improved significantly in recent years, with better tools for ensuring code correctness & security.
-+ External Tools:
-  + Formal verification frameworks: These tools help verify to correctness of smart contracts
-  + Static analyzers & Linters: These tools scan the code to detect common vulnerabilities and coding issues.
-**** Benefits
-+ Evolving ecosystem: The solidity community has developed various tools to improve security and verification, making it a viable option for secure smart contract development
-*** Comparison
-**** Built-in features & External Tools
-+ Move: offers built-in formal verification & a type system that inherently supports secure coding practices.
-+ Solidity: Relies on external tools & frameworks to achieve similar levels of verification & security
-**** Security Focus
-+ Move: designed from the ground up with security in mind.
-+ Solidity: Initially criticized for security issues but has made significant progress with new tools & practices
-***  Simple Analogy
-**** Move
-+ Imagine you have a car with advanced, built-in safety features.
-+ These features ensure that the car is secure and performs correctly without needing extra add-ons.
-**** Solidity
-+ Imagine you have a car that started with basic safety features but over time has had many new safety tools & technologies added to it to improve its security
+* Xác minh hợp đồng thông minh
+** Phương pháp xác minh hợp đồng thông minh của Move
+*** Tính năng chính:
++ Tập trung vào bảo mật: Move được thiết kế với ưu tiên hàng đầu là bảo mật.
++ Xác minh chính thức: Move cho phép các nhà phát triển chứng minh toán học rằng mã của họ là chính xác. Điều này có nghĩa là bạn có thể chắc chắn hơn rằng mã hoạt động như mong đợi và không có lỗi nhất định.
++ Hệ thống kiểu tuyến tính: Hệ thống kiểu của Move giúp ngăn ngừa nhiều lỗ hổng phổ biến, chẳng hạn như các cuộc tấn công tái nhập bằng cách làm cho việc suy luận về cách dữ liệu được sử dụng và chuyển giao dễ dàng hơn.
+
+*** Lợi ích:
++ Sự đảm bảo cao: Các tính năng tích hợp và hệ thống xác minh chính thức cung cấp cho các nhà phát triển các công cụ mạnh mẽ để đảm bảo mã của họ an toàn và chính xác.
+** Phương pháp xác minh hợp đồng thông minh của Solidity
+*** Tính năng chính:
++ Cải thiện hệ sinh thái: Solidity đã được cải thiện đáng kể trong những năm gần đây, với các công cụ tốt hơn để đảm bảo tính chính xác và bảo mật của mã.
+
+*** Công cụ bên ngoài:
++ Khung xác minh chính thức: Các công cụ này giúp xác minh tính chính xác của hợp đồng thông minh.
++ Bộ phân tích tĩnh & Linter: Các công cụ này quét mã để phát hiện các lỗ hổng và vấn đề mã hóa phổ biến.
+
+*** Lợi ích:
+Hệ sinh thái đang phát triển: Cộng đồng Solidity đã phát triển các công cụ khác nhau để cải thiện bảo mật và xác minh, làm cho nó trở thành một lựa chọn khả thi cho việc phát triển hợp đồng thông minh an toàn.
+
+So sánh
+
+Tính năng tích hợp & Công cụ bên ngoài:
+
+Move: cung cấp xác minh chính thức tích hợp và hệ thống kiểu vốn hỗ trợ các thực hành mã hóa an toàn.
+
+Solidity: Dựa vào các công cụ và khung bên ngoài để đạt được mức độ xác minh và bảo mật tương tự.
+
+Tập trung vào bảo mật:
+
+Move: được thiết kế từ đầu với trọng tâm là bảo mật.
+
+Solidity: Ban đầu bị chỉ trích vì các vấn đề bảo mật nhưng đã đạt được tiến bộ đáng kể với các công cụ và thực hành mới.
+
+Analog đơn giản:
+
+Move:
+
+Hãy tưởng tượng bạn có một chiếc xe có các tính năng an toàn tiên tiến được tích hợp sẵn.
+
+Các tính năng này đảm bảo rằng chiếc xe an toàn và hoạt động chính xác mà không cần thêm phụ kiện.
+
+Solidity:
+
+Hãy tưởng tượng bạn có một chiếc xe bắt đầu với các tính năng an toàn cơ bản nhưng theo thời gian đã được thêm vào nhiều công cụ và công nghệ an toàn mới để cải thiện tính an toàn của nó.

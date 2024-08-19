@@ -1,0 +1,62 @@
+# Struct
+- Struct là một cách định nghĩa kiểu dữ liệu tùy chỉnh trong Move, có thể được mô tả như một bộ lưu trữ key-value đơn giản, trong đó key là tên của thuộc tính và value là giá trị được lưu trữ.
+
+```rust
+module addr::StructAndAbilities {
+    struct Name has key, store, copy, drop {
+        number: u64,
+        other: vector<u8>
+    }
+}
+```
+
+# Struct Abilities
+- Key: Value có thể được sử dụng làm key cho các thao tác lưu trữ toàn cục.
+- Copy: Value có thể được sao chép (hoặc nhân bản theo giá trị).
+- Drop: Value có thể bị xóa khi kết thúc phạm vi.
+- Store: Value có thể được lưu trữ trong bộ lưu trữ toàn cục.
+
+```rust
+module addr::StructAndAbilities {
+    use std::vector;
+    use std::debug::print;
+    use std::string::{String, utf8};
+
+    struct Users has key, drop {
+        list_of_users: vector<User>
+    }
+
+    struct User has store, drop, copy {
+        name: String,
+        age: u8
+    }
+
+    public fun create_user(new_user_: User, users_: &mut Users): User {
+        vector::push_back(&mut users_.list_of_users, new_user_);
+        return new_user_
+    }
+
+    #[test]
+    fun test_create_friend() {
+        let user1 = User {
+            name: utf8(b"Jayden"),
+            age: 30
+        };
+
+        let user2 = User {
+            name: utf8(b"Jayden"),
+            age: 30
+        };
+
+        let users = Users {
+            list_of_users: vector::empty<User>()
+        };
+
+        let createUser1 = create_user(user1, &mut users);
+        let createUser2 = create_user(user2, &mut users);
+        print(&users);
+        assert!(createUser1.name == utf8(b"Jayden"), 0);
+        assert!(createUser2.name == utf8(b"Jayden"), 0);
+    }
+}
+```

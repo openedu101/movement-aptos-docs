@@ -1,26 +1,33 @@
-** Memory Management
-*** Solidity's MM
-**** Key Concepts
-+ Garbage Collector: Solidity uses a system that automatically cleans up memory that is no longer needed. This is similar to how many other programming languages work.
-+ Heap-Based Memory Management: Solidity stores dynamic data (data whose size can change) on the heap (storage), a region of memory where the data can grow or shrink as needed.
-****  Benefits
-+ Simplicity: Developers don't need to manually manage memory. The garbage collector takes care of freeing up unused memory.
-*** Move's MM
-**** Key Concepts
-+ Ownership Transfer: In Move, when you move data from one place to another, the original place moves access to that data. This means that once you give something away, you can't use it anymore.
-+ Linear Type System: This system ensures that each piece of data (resource) can only be used once. This helps prevent issues like data races (when two things try to use the same data at the same time) and use-after-free errors (using data after it has been deleted)
-**** Benefits
-+ Safety: By ensuring that data can only be used once, move avoids many common programming errors that can lead to security issues.
-*** Comparison
-+ Ownership & Automatic management:
-  + Move: you must think about who owns the data & where it's moved. Once moved, the original owner loses access.
-  + Solidity: the garbage collector automatically manages memory, so you don't need to worry about ownership.
-+ Safety & simplicity:
-  + Move: safety due to strict rules about data usage, but requires careful planning and understanding of data ownership.
-  + Solidity: Easier to write code because memory management is handled for you, but with a higher risk of memory-related bugs.
-*** Simple Analogy
-+ Move: imagine you have a unique key. When you give this key to someone, you can no longer use it. This ensures the key is always in one place & can't be used by multiple people at the same time.
-+ Solidity: Imagine you have a room where you can put things, you don't need to worry about cleaning up, and a cleaner comes in regularly and removes anything you're not using anymore.
-*** Summary
-+ Move: Focuses on strict memory management with a linear type system & ownership transfer, providing safety but requiring a careful approach
-+ Solidity: uses automatic memory management with a garbage collector, making it simpler to use but potentially less safe if not used carefully.
+* Quản lý bộ nhớ
+** Quản lý bộ nhớ trong Solidity
+*** Khái niệm chính:
++ Bộ thu gom rác (Garbage Collector): Solidity sử dụng một hệ thống tự động dọn dẹp bộ nhớ không còn được sử dụng nữa. Tương tự như cách thức hoạt động của nhiều ngôn ngữ lập trình khác.
++ Quản lý bộ nhớ dựa trên heap(Heap-Based Memory Management): Solidity lưu trữ dữ liệu động (dữ liệu có kích thước có thể thay đổi) trên heap (bộ nhớ), một vùng bộ nhớ mà dữ liệu có thể tăng hoặc giảm kích thước theo nhu cầu.
+
+*** Lợi ích:
++ Sự đơn giản: Các nhà phát triển không cần phải quản lý bộ nhớ thủ công. Bộ thu gom rác sẽ lo việc giải phóng bộ nhớ không sử dụng.
+
+** Quản lý bộ nhớ trong Move
+*** Khái niệm chính:
++ Chuyển giao quyền sở hữu (Ownership Transfer): Trong Move, khi bạn di chuyển dữ liệu từ một vị trí sang vị trí khác, vị trí gốc sẽ chuyển quyền truy cập vào dữ liệu đó. Điều này có nghĩa là một khi bạn tặng cái gì đó, bạn không thể sử dụng nó nữa.
++ Hệ thống kiểu tuyến tính(Linear Type System): Hệ thống này đảm bảo rằng mỗi phần dữ liệu (tài nguyên) chỉ có thể được sử dụng một lần. Điều này giúp ngăn ngừa các vấn đề như data races (khi hai thứ cố gắng sử dụng cùng một dữ liệu cùng một lúc) và lỗi sử dụng sau khi giải phóng (sử dụng dữ liệu sau khi đã bị xóa).
+
+*** Lợi ích:
++ An toàn: Bằng cách đảm bảo rằng dữ liệu chỉ có thể được sử dụng một lần, Move tránh nhiều lỗi lập trình phổ biến có thể dẫn đến các vấn đề bảo mật.
+
+** So sánh
+*** Quyền sở hữu & Quản lý tự động:
++ Move: bạn phải suy nghĩ về ai là chủ sở hữu dữ liệu & nó được di chuyển đến đâu. Sau khi di chuyển, chủ sở hữu gốc sẽ mất quyền truy cập.
++ Solidity: bộ thu gom rác tự động quản lý bộ nhớ, vì vậy bạn không cần phải lo lắng về quyền sở hữu.
+
+*** An toàn & Sự đơn giản:
++ Move: an toàn do các quy tắc nghiêm ngặt về việc sử dụng dữ liệu, nhưng yêu cầu lên kế hoạch cẩn thận và hiểu rõ về quyền sở hữu dữ liệu.
++ Solidity: Dễ dàng viết mã hơn vì quản lý bộ nhớ được xử lý cho bạn, nhưng có nguy cơ cao hơn về lỗi liên quan đến bộ nhớ.
+
+** Analog đơn giản:
++ Move: hãy tưởng tượng bạn có một chìa khóa duy nhất. Khi bạn đưa chìa khóa này cho ai đó, bạn không thể sử dụng nó nữa. Điều này đảm bảo chìa khóa luôn ở một vị trí & không thể được sử dụng bởi nhiều người cùng một lúc.
++ Solidity: Hãy tưởng tượng bạn có một căn phòng mà bạn có thể đặt đồ vào, bạn không cần phải lo lắng về việc dọn dẹp, và người dọn dẹp sẽ thường xuyên vào và loại bỏ bất cứ thứ gì bạn không còn sử dụng nữa.
+
+** Tóm tắt:
++ Move: Tập trung vào quản lý bộ nhớ nghiêm ngặt với hệ thống kiểu tuyến tính & chuyển giao quyền sở hữu, cung cấp sự an toàn nhưng yêu cầu một cách tiếp cận cẩn thận.
++ Solidity: sử dụng quản lý bộ nhớ tự động với bộ thu gom rác, làm cho nó đơn giản hơn để sử dụng nhưng tiềm ẩn nguy cơ ít an toàn hơn nếu không được sử dụng cẩn thận.

@@ -1,0 +1,82 @@
+## Function Visibilities
+### Private
+- Các function này chỉ có thể được sử dụng bên trong module nơi chúng được định nghĩa.
+- Hãy nghĩ về chúng như các hàm "chỉ dành cho module". Không module hay script nào khác có thể truy cập chúng.
+```rust
+module jayden_address::Priv {
+    fun pri_func(): u8 {
+        return 0;
+    }
+}
+
+module jayden_address::Publ {
+    fun other_func(): u8 {
+        let result: u8 = jayden_address::Priv::pri_func(); // Error
+        return result;
+    }
+}
+```
+
+### Public
+- Các hàm này có thể được sử dụng bởi bất kỳ module hoặc script nào khác.
+- Chúng giống như các hàm "mở cho tất cả mọi người".
+```rust
+module jayden_address::Publ {
+    public fun transfer(): u8 {
+        return 0;
+    }
+}
+
+module jayden_address::OtherMod {
+    fun other_func(): u8 {
+        let result: u8 = jayden_address::Publ::transfer();
+        return result;
+    }
+}
+```
+
+### Public(friend)
+- Các hàm này có thể được sử dụng bởi module nơi chúng được định nghĩa và bởi các module cụ thể khác được liệt kê là "friends".
+- Nó giống như có "quyền truy cập VIP" mà chỉ những người bạn được chọn mới có thể sử dụng các hàm này.
+```rust
+module jayden_address::PubFriend {
+    friend jayden_address::OtherMod;
+
+    public(friend) fun transfer(): u8 {
+        return 0;
+    }
+}
+
+module jayden_address::OtherMod {
+    fun other_func(): u8 {
+        let result: u8 = jayden_address::PubFriend::transfer();
+        return result;
+    }
+}
+
+module jayden_address::NotAllow {
+    fun other_func(): u8 {
+        let result: u8 = jayden_address::PubFriend::transfer(); // Error
+        return result;
+    }
+}
+```
+
+### Entry
+- Đây là các hàm đặc biệt nơi chương trình Move bắt đầu chạy hoặc nơi user có thể gọi vào contract.
+- Bạn có thể kết hợp "entry" với "public" hoặc "public(friend)" để chỉ định ai có thể bắt đầu thực thi.
+```rust
+module jayden_address::EntryFunc {
+    public(friend) entry fun internal_transfer(): u8 { // public friend entry
+        return 0;
+    }
+
+    public entry fun transfer(): u8 { // public entry
+        return 0;
+    }
+
+    entry fun transfer(): u8 { // private entry
+        return 0;
+    }
+}
+```

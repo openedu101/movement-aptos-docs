@@ -1,0 +1,23 @@
+## Abort
+```rust
+abort 10;
+assert!(expr, 10);
+```
+
+```rust
+module jayden_address::Errors {
+    const INVALID_ERROR: u64 = 100;
+
+    fun error_check(exp: bool) {
+        if (true) {
+            do_something();
+        } else {
+            // abort INVALID_ERROR;
+            assert!(true,INVALID_ERROR);
+        }
+    }
+}
+```
+
+## Assert
+... Update

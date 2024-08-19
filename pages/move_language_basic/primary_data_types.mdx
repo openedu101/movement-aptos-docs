@@ -1,0 +1,60 @@
+## Integer
+```rust
+module primary_data::Integer {
+    use std::debug::print;
+
+    fun integer_types() {
+        let a: u8 = 10;
+        let b: u64 = 1_000;
+        let c: u128 = 10_000;
+        print(&a);
+        print(&b);
+        print(&c);
+    }
+
+    #[test]
+    fun test_integer_types() {
+        integer_types()
+    }
+}
+```
+
+## Boolean
+```rust
+module primary_data::Boolean {
+    use std::debug::print;
+
+    fun bool_types() {
+        let a: bool = true;
+        let b: bool = false;
+        print(&a);
+        print(&b);
+    }
+
+    #[test]
+    fun test_bool_types() {
+        bool_types()
+    }
+}
+```
+
+## Address
+``` rust
+module primary_data::Addr {
+    use std::debug::print;
+
+    fun addr_types() {
+        let a: address = @std;
+        let b: address = @swap;
+        let c: address = @0xCAFE;
+        print(&a);
+        print(&b);
+        print(&c);
+    }
+
+    #[test]
+    fun test_addr_types() {
+        addr_types()
+    }
+}
+```

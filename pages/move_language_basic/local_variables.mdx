@@ -1,0 +1,56 @@
+# Local Variables
+- Các biến cục bộ trong Move được xác định phạm vi lexically (phạm vi tĩnh). Các biến mới được định nghĩa với từ khóa `let`, và sẽ che khuất (shadow) bất kỳ biến cục bộ nào trước đó có cùng tên.
+- Các biến cục bộ có thể thay đổi và có thể được cập nhật trực tiếp và thông qua một tham chiếu có thể thay đổi (multable reference).
+
+```rust
+module addr::LocalVar {
+    fun local_variables()
+    {
+        let b:u8;
+        let c=false;
+        let d=b"hello world";
+        let e:u64=10000;
+        let f:address = @my_addrx;
+    }
+}
+```
+
+## Conventional - Quy tắt đặt tên cho variables
+```rust
+// all valid
+let x = 1;
+let _x = 1;
+let _A = 1;
+let x0 = 1;
+let xA = 1;
+let foobar_123 = 1;
+
+// all invalid
+let X = 1; // ERROR!
+let Foo = 1; // ERROR!
+```
+
+## Định nghĩa hàng loạt với tuple
+```rust
+//Valid
+let (x,y,z) = (1,@0x1,false);
+//Invalid
+let (p,q) = (1,2,3,4);
+```
+
+## Dấu gạch dưới cho các biến không sử dụng
+- Trong Move, mọi biến đều phải được sử dụng (nếu không mã của bạn sẽ không biên dịch được), vì vậy bạn không thể khởi tạo một biến rồi để nó không được sử dụng. Tuy nhiên, bạn có một cách để đánh dấu biến là không sử dụng có chủ đích - bằng cách sử dụng dấu gạch dưới _ .
+```rust
+module my_addrx::Variable
+{
+    fun local_variables()
+    {
+        let a=1;   //compiling this module will result in error as "a" is not being used.
+
+        let _=1; //compiling this module will not result in error
+
+        let b=10;
+        _=b;    //This is called shadowing
+    }
+}
+```
