@@ -1,0 +1,64 @@
+# Aptos Account
+## Cấu trúc Address
+
+Address trong Aptos là một chuỗi 32-byte, thường được biểu diễn dưới dạng 64 ký tự hex. Mỗi ký tự hex đại diện cho một nibble (4 bit).
+
+### Ví dụ:
+- Alice: `0xeeff357ea5c1a4e7bc11b2b17ff2dc2dcca69750bfef1e1ebcaccf8c8018175b`
+- Bob: `0x19aadeca9388e009d136245b9a67423f3eee242b03142849eb4f81a4a409e59c`
+
+## Tiền tố và số 0 đứng đầu
+1. address có thể có tiền tố `0x` để chỉ ra rằng đó là một số hex.
+2. Các số 0 đứng đầu có thể được bỏ qua khi hiển thị, nhưng vẫn là một phần của address 32-byte đầy đủ.
+
+### Ví dụ với số 0 đứng đầu:
+- Dan: `0000357ea5c1a4e7bc11b2b17ff2dc2dcca69750bfef1e1ebcaccf8c8018175b`
+- Dan: `0x0000357ea5c1a4e7bc11b2b17ff2dc2dcca69750bfef1e1ebcaccf8c8018175b`
+- Dan: `0x357ea5c1a4e7bc11b2b17ff2dc2dcca69750bfef1e1ebcaccf8c8018175b`
+
+Tất cả các biểu diễn trên đều chỉ cùng một address.
+
+## Tạo address
+address tài khoản được tạo từ khóa xác thực ban đầu, theo quy trình sau:
+  1. Tạo cặp khóa công khai/riêng tư.
+  2. Kết hợp khóa công khai với scheme chữ ký để tạo khóa xác thực 32-byte.
+  3. Sử dụng khóa xác thực này làm address tài khoản.
+
+## Xử lý address trong code
+
+Khi làm việc với address trong code, nhà phát triển nên lưu ý:
+
+1. Luôn xử lý address dưới dạng 32-byte đầy đủ.
+2. Khi hiển thị cho người dùng, có thể bỏ qua các số 0 đứng đầu để dễ đọc hơn.
+3. Khi nhận đầu vào từ người dùng, hãy chấp nhận cả dạng đầy đủ và dạng rút gọn, sau đó chuẩn hóa về dạng 32-byte.
+
+## Ví dụ xử lý address trong Move
+
+```move
+use std::address;
+
+fun process_address(addr: address) {
+    // address luôn là 32-byte trong Move
+    // Không cần xử lý đặc biệt
+}
+
+fun display_address(addr: address): String {
+    // Chuyển đổi address thành chuỗi và loại bỏ số 0 đứng đầu
+    let addr_str = address::to_string(addr);
+    // Lưu ý: Đây chỉ là ví dụ, Move không có kiểu String nguyên thủy
+    // Bạn cần implement hàm remove_leading_zeros
+    remove_leading_zeros(addr_str)
+}
+```
+
+## Address Short
+Aptos cũng hỗ trợ address ngắn hơn 32-byte. Trong trường hợp này:
+- address sẽ được tự động điền thêm số 0 ở đầu để đạt đủ 32-byte.
+- Ví dụ: 0x1 sẽ được xử lý như 0x0000000000000...01
+
+Nhà phát triển nên cẩn thận khi xử lý address ngắn và đảm bảo rằng chúng được chuẩn hóa đúng cách trước khi sử dụng.
+
+## Bảo mật và address
+- address không phải là private, nhưng nó là định danh duy nhất của tài khoản.
+- Không nên sử dụng address làm seed để tạo khóa riêng tư.
+- Luôn xác minh address khi nhận từ đầu vào người dùng để tránh các cuộc tấn công liên quan đến address không hợp lệ.

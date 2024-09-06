@@ -2,11 +2,11 @@
   "index": "What is Movement?",
   "aptos": "What is Aptos?",
   "movement": "Movement Technical Details",
-  "movement_framework" : "Movement Framework (Coming Soon)",
-  "interoperability_security": "Interoperability & Security (Coming Soon)",
   "move_solidity" : "Move vs Solidity",
   "move_language_basic" : "Move Language Basic",
   "move_language_advanced" : "Move Language Advanced",
+  "aptos_move" : "Aptos Move",
+  "swap_contract" : "Swap Contract",
   "rakiapp": {
     "title": "Movement with Aptos Workshop ↗",
     "type": "page",

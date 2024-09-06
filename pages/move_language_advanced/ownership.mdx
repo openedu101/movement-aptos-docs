@@ -1,0 +1,60 @@
+# Ownership trong Move
+
+## Khái niệm cơ bản
+
+Ownership (quyền sở hữu) trong ngôn ngữ lập trình Move là một khái niệm được sử dụng để quản lý bộ nhớ và tài nguyên. Nó dựa trên ý tưởng rằng mỗi tài nguyên chỉ có thể có một chủ sở hữu tại một thời điểm, và quyền sở hữu có thể được chuyển giao từ chủ sở hữu này sang chủ sở hữu khác.
+
+Điều này cho phép Move:
+- Thực thi tính an toàn về bộ nhớ
+- Ngăn chặn các cuộc đua dữ liệu (data races)
+- Cho phép quản lý bộ nhớ hiệu quả
+
+## Cách hoạt động
+
+1. **Borrow checker**: Move sử dụng borrow checker để đảm bảo rằng một tài nguyên không được sử dụng sau khi nó đã được di chuyển hoặc mượn.
+
+2. **Linear Typed System**: Move có một hệ thống kiểu tuyến tính, nghĩa là tài nguyên chỉ có thể được tiêu thụ một lần và phải được di chuyển hoặc mượn theo một thứ tự cụ thể.
+
+3. **Phạm vi sở hữu**: Chủ sở hữu là một phạm vi sở hữu một biến. Biến có thể được định nghĩa trong phạm vi này (ví dụ: với từ khóa `let`) hoặc được truyền vào phạm vi dưới dạng đối số. Trong Move, phạm vi duy nhất là hàm.
+
+4. **Quy tắc một chủ sở hữu**: Mỗi biến chỉ có một chủ sở hữu. Khi một biến được truyền vào hàm dưới dạng đối số, hàm này trở thành chủ sở hữu mới, và biến không còn thuộc sở hữu của hàm đầu tiên nữa.
+
+## Di chuyển và Sao chép
+
+### Di chuyển (Move)
+
+Khi một biến được truyền vào một hàm khác, nó được di chuyển và sử dụng OpCode `MoveLoc`. Ví dụ:
+
+```rust
+script {
+    use {{sender}}::M;
+
+    fun main() {
+        let a : Module::T = Module::create(10);
+
+        M::value(move a); // biến a được di chuyển
+
+        // biến cục bộ a bị hủy
+    }
+}
+```
+
+### Sao chép (Copy)
+Nếu bạn cần truyền một giá trị vào hàm (nơi nó sẽ bị di chuyển) và lưu một bản sao của biến của bạn, bạn có thể sử dụng từ khóa copy:
+
+```rust
+script {
+    use {{sender}}::M;
+
+    fun main() {
+        let a : Module::T = Module::create(10);
+
+        // chúng ta sử dụng từ khóa copy để sao chép cấu trúc
+        // có thể được sử dụng như `let a_copy = copy a`
+        M::value(copy a);
+        M::value(a); // không bị lỗi, a vẫn còn ở đây
+    }
+}
+```
+
+**Lưu ý: Việc sao chép một giá trị sẽ nhân đôi nó và tăng kích thước bộ nhớ của chương trình. Trong blockchain, mỗi byte đều có giá và ảnh hưởng đến chi phí thực thi, vì vậy việc sử dụng copy quá nhiều có thể tốn kém về mặt bộ nhớ.**

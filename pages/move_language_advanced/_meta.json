@@ -1,14 +1,9 @@
 {
   "global_storage_structure" : "Global Storage Structure",
-  "global_storage_operations" : "Global Storage Operations",
+  "
+global_storage_operations" : "Global Storage Operations",
   "phantom_type_parameters" : "Phantom Type Parameters",
-  "timestamps" : "Timestamps",
   "ownership" : "Ownership",
   "move_coding_conventions" : "Move Coding Conventions",
   "view_function" : "View Function",
-  "aptos_account" : "Aptos Account",
-  "aptos_coin" : "Aptos Coin",
-  "aptos_token_nft" : "Aptos Token (NFT)",
-  "object" : "Object",
-  "token_v2" : "Token V2"
 }

@@ -1,0 +1,85 @@
+# MathSafe Module
+
+## Tổng quan
+
+MathSafe là một module cung cấp các phép toán số học an toàn cho các phép tính liên quan đến tiền tệ và tỷ lệ trong các ứng dụng DeFi (Tài chính phi tập trung). Module này được thiết kế để xử lý các phép tính với số nguyên lớn một cách chính xác và tránh tràn số, đặc biệt quan trọng trong các giao dịch tài chính.
+
+```rust
+module moveview::Math {
+    public fun mul_div(a: u128, b: u128, denominator: u128): u128 {
+        let result = (a as u256) * (b as u256) / (denominator as u256);
+        (result as u128)
+    }
+
+    public fun sqrt(y: u128): u64 {
+        if (y < 4) {
+            if (y == 0) {
+                0u64
+            } else {
+                1u64
+            }
+        } else {
+            let z = y;
+            let x = y / 2 + 1;
+            while (x < z) {
+                z = x;
+                x = (y / x + x) / 2;
+            };
+            (z as u64)
+        }
+    }
+
+    public fun min(a: u128, b: u128): u128 {
+        if (a < b) a else b
+    }
+}
+```
+
+## Chức năng
+
+MathSafe cung cấp các hàm sau:
+
+1. `mul_div`: Nhân hai số và chia kết quả cho một số thứ ba.
+2. `sqrt`: Tính căn bậc hai của một số.
+3. `min`: Trả về giá trị nhỏ nhất trong hai số.
+
+## Tại sao cần MathSafe?
+
+### 1. Xử lý số nguyên lớn
+
+Trong các ứng dụng DeFi, chúng ta thường phải làm việc với số lượng token rất lớn (ví dụ: 10^18 đơn vị cho 1 token). Các phép tính thông thường có thể dẫn đến tràn số, gây ra kết quả không chính xác hoặc lỗi runtime.
+
+### 2. Độ chính xác trong tính toán tài chính
+
+Các giao dịch tài chính yêu cầu độ chính xác cao. Ngay cả sai số nhỏ cũng có thể dẫn đến mất mát đáng kể khi xử lý số lượng lớn.
+
+### 3. Tránh lỗi tràn số
+
+Phép nhân hai số lớn có thể dễ dàng vượt quá giới hạn của kiểu dữ liệu u128. MathSafe sử dụng kỹ thuật để tránh tràn số trong quá trình tính toán.
+
+### 4. Tính toán tỷ lệ chính xác
+
+Trong các pool thanh khoản, việc tính toán tỷ lệ token cần phải chính xác để đảm bảo công bằng cho người dùng và duy trì cân bằng của pool.
+
+### 5. Tối ưu hóa gas
+
+Bằng cách sử dụng các phép toán hiệu quả, MathSafe giúp tối ưu hóa chi phí gas cho các giao dịch trên blockchain.
+
+## Ví dụ sử dụng
+
+```move
+use moveview::MathSafe;
+
+// Tính lượng token output trong một swap
+let amount_out = MathSafe::mul_div(amount_in, reserve_out, reserve_in);
+
+// Tính lượng liquidity khi thêm vào pool
+let liquidity = MathSafe::sqrt(amount_a * amount_b);
+
+// Chọn giá trị nhỏ hơn để tránh slippage
+let amount = MathSafe::min(desired_amount, max_amount);
+```
+
+## Kết luận
+
+MathSafe là một công cụ quan trọng trong việc phát triển các ứng dụng DeFi an toàn và chính xác. Bằng cách sử dụng module này, các nhà phát triển có thể tránh được nhiều lỗi phổ biến liên quan đến tính toán số học, đảm bảo tính toàn vẹn của dữ liệu tài chính và nâng cao độ tin cậy của ứng dụng.

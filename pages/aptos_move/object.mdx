@@ -1,0 +1,86 @@
+# Object
+
+## Mô hình Object
+
+Mô hình Object cho phép Move biểu diễn một kiểu dữ liệu phức tạp như một tập hợp các tài nguyên được lưu trữ trong một địa chỉ duy nhất. Nó cung cấp một mô hình khả năng phong phú, cho phép kiểm soát tài nguyên chi tiết và quản lý quyền sở hữu linh hoạt.
+
+## Các đặc điểm của mô hình Object
+
+1. Giao diện lưu trữ đơn giản hóa: Hỗ trợ lưu trữ một tập hợp các tài nguyên không đồng nhất cùng nhau. Điều này cho phép các kiểu dữ liệu chia sẻ một lớp dữ liệu cơ bản chung (ví dụ: tokens), trong khi vẫn có thể mở rộng phong phú hơn (ví dụ: vé concert, thanh kiếm).
+
+2. Mô hình dữ liệu và quyền sở hữu có thể truy cập toàn cầu: Cho phép người tạo và nhà phát triển quyết định việc áp dụng và vòng đời của dữ liệu.
+
+3. Mô hình lập trình có thể mở rộng: Hỗ trợ cá nhân hóa các ứng dụng người dùng tận dụng framework cốt lõi, bao gồm cả tokens.
+
+4. Hỗ trợ phát sự kiện trực tiếp: Cải thiện khả năng phát hiện các sự kiện liên quan đến objects.
+
+5. Tối ưu hóa hiệu suất hệ thống: Sử dụng nhóm tài nguyên để tối ưu hóa gas, tránh chi phí deserialization và serialization đắt đỏ, và hỗ trợ khả năng xóa.
+
+Object là một primitive cốt lõi trong Aptos Move và được tạo thông qua module object tại địa chỉ 0x1::object.
+
+## Ví dụ mã
+
+Dưới đây là một ví dụ về cách sử dụng Object trong Aptos Move:
+
+```move
+module my_addrx::MyFriends
+{
+    use std::vector;
+    use aptos_std::object::{Self,Object};
+    use std::signer;
+    use aptos_framework::account;
+
+    struct MyFriends has key
+    {
+        friends: vector<vector<u8>>,
+    }
+
+    // Hàm tạo danh sách bạn bè
+    public entry fun create_friends(caller: &signer, list:vector<vector<u8>> ) : Object<MyFriends>
+    {
+        let myfriend_constructor_ref = object::create_object_from_account(caller);
+        let myfriend_signer = object::generate_signer(&myfriend_constructor_ref);
+        move_to(&myfriend_signer, MyFriends{ friends:list });
+        let obj = object::object_from_constructor_ref<MyFriends>(&myfriend_constructor_ref);
+        return obj
+    }
+
+    // Hàm chuyển quyền sở hữu object
+    public entry fun transferring_of_ownership(from: &signer,to: address,obj: Object<MyFriends>) : address
+    {
+        object::transfer(from,obj,to); // Chuyển quyền sở hữu của object
+        let new_owner_of_the_object = object::owner(obj); // Quyền sở hữu được theo dõi trên chính object
+        return new_owner_of_the_object
+    }
+
+    // Hàm kiểm tra
+    #[test(owner = @0x123)]
+    public entry fun test_flow(owner: signer)
+    {
+        account::create_account_for_test(signer::address_of(&owner));
+
+        // Tạo danh sách bạn bè
+        let list = vector::empty<vector<u8>>();
+        vector::push_back(&mut list, b"John");
+        vector::push_back(&mut list, b"Harry");
+        vector::push_back(&mut list, b"Gwen");
+        let obj = create_friends(&owner,list);
+
+        assert!(signer::address_of(&owner) == @0x123,1);
+
+        // Chuyển quyền sở hữu của object từ tài khoản chủ sở hữu sang tài khoản 0x345
+        let new_owner_address = transferring_of_ownership(&owner,@0x345,obj);
+
+        assert!(new_owner_address == @0x345,1);
+    }
+}
+```
+
+Trong ví dụ này:
+
+1. Chúng ta định nghĩa một struct `MyFriends` để lưu trữ danh sách bạn bè.
+2. Hàm `create_friends` tạo một Object mới chứa danh sách bạn bè.
+3. Hàm `transferring_of_ownership` cho phép chuyển quyền sở hữu của Object từ một tài khoản sang tài khoản khác.
+4. Hàm `test_flow` kiểm tra quá trình tạo Object và chuyển quyền sở hữu.
+
+Mô hình Object trong Aptos Move cung cấp một cách linh hoạt và mạnh mẽ để quản lý dữ liệu phức tạp và quyền sở hữu trong các ứng dụng blockchain.

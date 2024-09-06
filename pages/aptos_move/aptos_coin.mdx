@@ -1,0 +1,171 @@
+# Aptos Coin
+
+[Coin](https://github.com/aptos-labs/aptos-core/blob/main/aptos-move/framework/aptos-framework/sources/coin.move) cung cấp một framework tiêu chuẩn, an toàn về kiểu cho các token hoặc coin fungible đơn giản.
+
+## Structure
+
+### Reusability
+
+Một coin được định nghĩa trong Move như sau:
+
+```rust
+struct Coin<phantom CoinType> has store {
+    /// Số lượng coin mà địa chỉ này có.
+    value: u64,
+}
+```
+
+Coin sử dụng `CoinType` để hỗ trợ tái sử dụng framework Coin cho các Coin riêng biệt. Ví dụ, `Coin<A>` và `Coin<B>` là hai coin khác nhau.
+
+### Kho lưu trữ toàn cục
+Coin cũng hỗ trợ một resource để lưu trữ coin trong kho lưu trữ toàn cục:
+
+```rust
+struct CoinStore<phantom CoinType> has key {
+    coin: Coin<CoinType>,
+    frozen: bool,
+    deposit_events: EventHandle<DepositEvent>,
+    withdraw_events: EventHandle<WithdrawEvent>,
+}
+```
+
+Thông tin hoặc metadata của coin được lưu trữ trong global storage dưới tài khoản của người tạo coin:
+```rust
+struct CoinInfo<phantom CoinType> has key {
+    name: string::String,
+    /// Ký hiệu của coin, thường là phiên bản ngắn hơn của tên.
+    /// Ví dụ, Singapore Dollar là SGD.
+    symbol: string::String,
+    /// Số lượng số thập phân được sử dụng để hiển thị cho người dùng.
+    /// Ví dụ, nếu `decimals` bằng `2`, số dư `505` coin sẽ
+    /// được hiển thị cho người dùng là `5.05` (`505 / 10 ** 2`).
+    decimals: u8,
+    /// Số lượng của loại coin này đang tồn tại.
+    supply: Option<OptionalAggregator>,
+}
+```
+
+## Tạo một CoinType mới
+
+Người tạo coin có thể publish lên một account on-chain một module mới định nghĩa một struct để đại diện cho một `CoinType` mới. Người tạo coin sau đó sẽ gọi `coin:initialize<CoinType>` từ tài khoản đó để đăng ký nó như một coin hợp lệ, và nhận lại các struct cho phép gọi các function để đốt(burn) và tạo(mint) coin cũng như đóng băng (freeze) `CoinStore`. Những struct này cần được lưu trữ trong global storage bởi người tạo để quản lý việc sử dụng coin.
+
+```rust
+public fun initialize<CoinType>(
+    account: &signer,
+    name: string::String,
+    symbol: string::String,
+    decimals: u8,
+    monitor_supply: bool,
+): (BurnCapability<CoinType>, FreezeCapability<CoinType>, MintCapability<CoinType>) {
+```
+
+- Ba tham số đầu tiên (`name`, `symbol`, `decimals`) chỉ là metadata và không ảnh hưởng đến các ứng dụng on-chain. Một số ứng dụng có thể sử dụng decimal để quy đổi một Coin đơn vị thành phân số coin.
+- Theo dõi nguồn cung (`monitor_supply`) giúp theo dõi tổng số coin trong lưu thông. Tuy nhiên, do cách thức hoạt động của bộ thực thi song song, bật tùy chọn này sẽ ngăn chặn bất kỳ việc thực thi song song nào của mint và burn. Nếu coin sẽ được tạo hoặc đốt thường xuyên, hãy cân nhắc tắt `monitor_supply`.
+
+## Tạo Coin (Mint)
+Nếu người tạo hoặc quản lý muốn tạo coin, họ phải lấy tham chiếu đến `MintCapability` của họ, được tạo ra trong `initialize`, và gọi:
+
+```rust
+public fun mint<CoinType>(
+    amount: u64,
+    _cap: &MintCapability<CoinType>,
+): Coin<CoinType> acquires CoinInfo {
+```
+
+Điều này sẽ tạo ra một struct Coin mới chứa giá trị được xác định bởi `amount`.
+
+## Đốt Coin (Burn)
+Nếu người tạo hoặc quản lý muốn đốt coin, họ phải lấy tham chiếu đến `BurnCapability` của họ, được tạo ra trong `initialize`, và gọi:
+
+```rust
+public fun burn<CoinType>(
+    coin: Coin<CoinType>,
+    _cap: &BurnCapability<CoinType>,
+) acquires CoinInfo {
+```
+
+Người tạo hoặc quản lý cũng có thể đốt coin từ một `CoinStore`:
+
+```rust
+public fun burn_from<CoinType>(
+    account_addr: address,
+    amount: u64,
+    burn_cap: &BurnCapability<CoinType>,
+) acquires CoinInfo, CoinStore {
+```
+
+## Đóng băng tài khoản (Freeze)
+
+Nếu người tạo hoặc quản lý muốn đóng băng một `CoinStore` trên một tài khoản cụ thể, họ phải lấy tham chiếu đến `FreezeCapability` của họ, được tạo ra trong `initialize`, và gọi:
+
+```rust
+public entry fun freeze_coin_store<CoinType>(
+    account_addr: address,
+    _freeze_cap: &FreezeCapability<CoinType>,
+) acquires CoinStore {
+```
+
+## Gộp Coin (Merge)
+Hai coin cùng loại có thể được gộp thành một struct Coin duy nhất đại diện cho tổng giá trị của hai coin độc lập bằng cách gọi:
+
+```rust
+public fun merge<CoinType>(
+    dst_coin: &mut Coin<CoinType>,
+    source_coin: Coin<CoinType>,
+) {
+```
+
+## Trích xuất Coin (Extract)
+Một Coin có thể bị trừ giá trị để tạo ra một Coin khác bằng cách gọi:
+
+```rust
+public fun extract<CoinType>(
+        coin: &mut Coin<CoinType>,
+        amount: u64,
+): Coin<CoinType> {
+```
+
+## Rút Coin từ CoinStore (Withdraw)
+Người nắm giữ `CoinStore` có thể trích xuất một Coin với giá trị được chỉ định bằng cách gọi:
+
+```rust
+public fun withdraw<CoinType>(
+    account: &signer,
+    amount: u64,
+): Coin<CoinType> acquires CoinStore {
+```
+
+## Gửi Coin vào CoinStore (Deposit)
+Bất kỳ thực thể nào cũng có thể gửi coin vào `CoinStore` của một tài khoản bằng cách gọi:
+
+```rust
+public fun deposit<CoinType>(
+        account_addr: address,
+        coin: Coin<CoinType>,
+) acquires CoinStore {
+```
+
+## Chuyển Coin (Transfer)
+Người nắm giữ `CoinStore` có thể trực tiếp chuyển coin từ tài khoản của họ sang `CoinStore` của tài khoản khác bằng cách gọi:
+
+```rust
+public entry fun transfer<CoinType>(
+    from: &signer,
+    to: address,
+    amount: u64,
+) acquires CoinStore {
+```
+
+## Sự kiện (Event)
+
+```rust
+struct DepositEvent has drop, store {
+    amount: u64,
+}
+```
+
+```rust
+struct WithdrawEvent has drop, store {
+    amount: u64,
+}
+```

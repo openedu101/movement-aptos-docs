@@ -1,0 +1,39 @@
+# View Functions trong Aptos Blockchain
+
+## Định nghĩa
+
+View function là một hàm truy xuất dữ liệu từ blockchain mà không thực hiện bất kỳ thay đổi nào. Nó được sử dụng để đọc và hiển thị dữ liệu được lưu trữ trên blockchain.
+
+## Tầm quan trọng
+
+View functions quan trọng trong Aptos blockchain vì:
+
+1. Cho phép các ứng dụng bên ngoài truy cập và hiển thị dữ liệu trên blockchain mà không cần truy cập trực tiếp vào blockchain.
+2. Cải thiện hiệu quả và bảo mật của mạng blockchain.
+
+## Lợi ích
+
+1. Tạo ra cấu trúc API GET để hiển thị trạng thái phức tạp của smart contracts.
+2. Đơn giản hóa quy trình truy xuất dữ liệu phức tạp, tiết kiệm thời gian và tài nguyên.
+3. Cải thiện đáng kể khả năng sử dụng của Aptos blockchain.
+4. Làm cho blockchain dễ tiếp cận hơn với các nhà phát triển.
+
+## Cách sử dụng
+
+Sử dụng decorator `#[view]` để định nghĩa một view function:
+
+```move
+#[view]
+public fun get_todos(todo_address: address): vector<String> acquires TodoStore {
+    borrow_global<TodoStore>(todo_address).todos
+}
+```
+## Ưu điểm
+
+Truy xuất trạng thái phức tạp từ smart contract một cách hiệu quả hơn.
+Định nghĩa các hàm trả về dữ liệu cụ thể từ smart contract.
+Cung cấp API đơn giản cho các invoker bên ngoài để truy xuất dữ liệu từ blockchain.
+Nhận dữ liệu cụ thể cần thiết thay vì toàn bộ cơ sở dữ liệu mỗi lần truy vấn.
+
+# Kết luận
+View functions là một bổ sung quan trọng cho Aptos blockchain, cải thiện đáng kể khả năng sử dụng và tiếp cận của nó. Chúng giúp các nhà phát triển tạo ra các ứng dụng hiệu quả hơn bằng cách đơn giản hóa quá trình truy xuất dữ liệu từ blockchain.

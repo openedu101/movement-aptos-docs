@@ -1,0 +1,76 @@
+# Công thức Constant Product trong DEX
+## Tổng quan
+
+Công thức constant product là nền tảng của nhiều sàn giao dịch phi tập trung (DEX) như Uniswap. Nó được sử dụng để xác định tỷ lệ trao đổi giữa hai token trong một pool thanh khoản.
+
+## Nguyên lý
+
+Công thức dựa trên nguyên tắc rằng tích của số lượng hai token trong pool luôn phải không đổi trước và sau mỗi giao dịch:
+
+```
+x * y = k
+```
+
+Trong đó:
+- `x` là số lượng của token A trong pool
+- `y` là số lượng của token B trong pool
+- `k` là hằng số không đổi
+
+## Hàm tính toán số lượng token đầu ra
+
+```move
+public fun get_amount_out(amount_in: u128, in_reserve: u128, out_reserve: u128): u128 {
+    let amount_in_with_fee = amount_in * 997;
+    let numerator = amount_in_with_fee * out_reserve;
+    let denominator = in_reserve * 1000 + amount_in_with_fee;
+    numerator / denominator
+}
+```
+
+### Tham số
+
+- `amount_in`: Số lượng token đầu vào mà người dùng muốn trao đổi.
+- `in_reserve`: Số lượng token đầu vào hiện có trong pool.
+- `out_reserve`: Số lượng token đầu ra hiện có trong pool.
+
+### Giải thích
+
+1. **Phí giao dịch**:
+   ```move
+   let amount_in_with_fee = amount_in * 997;
+   ```
+   Áp dụng phí giao dịch 0.3% (3/1000) bằng cách nhân `amount_in` với 997.
+
+2. **Tính toán số lượng đầu ra**:
+   ```move
+   let numerator = amount_in_with_fee * out_reserve;
+   let denominator = in_reserve * 1000 + amount_in_with_fee;
+   ```
+   Đây là phần triển khai của công thức constant product, đảm bảo rằng `x * y = k` được duy trì sau giao dịch.
+
+3. **Kết quả**:
+   ```move
+   numerator / denominator
+   ```
+   Chia tử số cho mẫu số để có được số lượng token đầu ra.
+
+## Lưu ý
+
+- Hàm này sử dụng số nguyên 128-bit (`u128`) để tính toán, giúp tăng độ chính xác và tránh tràn số.
+- Phí giao dịch 0.3% được tích hợp trực tiếp vào công thức.
+- Kết quả được làm tròn xuống do sử dụng phép chia số nguyên.
+
+## Ví dụ sử dụng
+
+```move
+let amount_in = 100000; // 100,000 token A
+let reserve_a = 1000000; // 1,000,000 token A trong pool
+let reserve_b = 500000; // 500,000 token B trong pool
+
+let amount_out = get_amount_out(amount_in, reserve_a, reserve_b);
+// amount_out sẽ là số lượng token B mà người dùng nhận được
+```
+
+## Kết luận
+
+Công thức constant product đảm bảo tính thanh khoản của pool bằng cách điều chỉnh giá tự động dựa trên cung và cầu. Khi số lượng một token trong pool giảm, giá của nó sẽ tăng lên, và ngược lại, tạo ra một cơ chế cân bằng tự nhiên.

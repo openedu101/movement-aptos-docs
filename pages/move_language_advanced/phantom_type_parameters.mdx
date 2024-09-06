@@ -1,0 +1,49 @@
+# Original Phantom Type Parameters trong Move
+
+## Định nghĩa
+
+Original phantom type parameters là một loại tham số đặc biệt trong định nghĩa struct của ngôn ngữ Move. Chúng được đánh dấu bằng từ khóa `phantom` và có một số đặc điểm riêng biệt.
+
+## Mục đích sử dụng
+
+Original phantom type parameters giúp:
+- Tránh phải chú thích khả năng (ability) không cần thiết khi sử dụng các kiểu generic
+- Cho phép khai báo một tham số kiểu mà không ảnh hưởng đến khả năng của struct
+
+## Cách sử dụng
+
+### Khai báo
+Thêm từ khóa `phantom` trước tham số kiểu trong định nghĩa struct.
+
+Ví dụ:
+```move
+struct S<phantom T, U> { ... }
+```
+
+### Quy tắc quan trọng
+Original phantom type parameters chỉ có thể được sử dụng ở "vị trí phantom". Điều này có nghĩa là chúng chỉ có thể:
+- Không được sử dụng trong định nghĩa struct, hoặc
+- Chỉ được sử dụng làm đối số cho một original phantom type parameter khác
+
+Ví dụ:
+- Hợp lệ:
+```move
+struct S1<phantom T1, T2> { f: u64 }  // OK: T1 không được sử dụng
+struct S2<phantom T1, T2> { f: S1<T1, T2> }  // OK: T1 ở vị trí phantom
+```
+
+- Không hợp lệ
+```move
+struct S1<phantom T> { f: T }  // Lỗi: T không ở vị trí phantom
+struct S2<T> { f: T }
+struct S3<phantom T> { f: S2<T> }  // Lỗi: T không ở vị trí phantom
+```
+
+## Ảnh hưởng tới abilities của Struct
+Khi khởi tạo một struct, các đối số cho original phantom type parameters không ảnh hưởng đến khả năng của struct đó.
+
+Ràng buộc khả năng
+- Original phantom type parameters vẫn có thể có ràng buộc khả năng. Khi sử dụng, đối số phải thỏa mãn ràng buộc này, dù là original phantom type parameter.
+
+## Kết luận
+Original phantom type parameters là một công cụ hữu ích trong Move để linh hoạt hơn trong việc định nghĩa các struct generic mà không ảnh hưởng không cần thiết đến khả năng của chúng.
