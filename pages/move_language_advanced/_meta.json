@@ -1,7 +1,6 @@
 {
   "global_storage_structure" : "Global Storage Structure",
-  "
-global_storage_operations" : "Global Storage Operations",
+  "global_storage_operations" : "Global Storage Operations",
   "phantom_type_parameters" : "Phantom Type Parameters",
   "ownership" : "Ownership",
   "move_coding_conventions" : "Move Coding Conventions",
