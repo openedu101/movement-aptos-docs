@@ -14,10 +14,6 @@
   "vector" : "Vector",
   "address" : "Address",
   "maps" : "Maps",
-  "hash_function" : "Hash Functions",
-  "references" : "References",
   "unit_test" : "Unit Test",
-  "generics" : "Generics",
-  "type_arguments" : "Type Arguments",
-  "type_inference" : "Type Inference"
+  "generics" : "Generics"
 }
